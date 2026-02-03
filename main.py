@@ -5,10 +5,11 @@ import json
 app = FastAPI()
 
 app.add_middleware(
-    CORSMiddleware, 
-    allow_origins=["*"],
-    allow_methods=["*"],
-    allow_headers=["*"]
+    CORSMiddleware,
+    allow_origins=["https://nm202644.github.io/tempcheck/", "*"],  
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["Content-Type", "Authorization"],
 )
 
 data = {"crisis":0,"highly-stressed":0,"concerned":0,"neutral":0,"very-good":0,"thriving":0}
