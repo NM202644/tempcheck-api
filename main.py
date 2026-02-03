@@ -13,17 +13,20 @@ app.add_middleware(
     allow_headers=["Content-Type", "Authorization"],
 )
 
+import redis
+import json
+import os
+
+r = redis.from_url(os.environ.get("REDIS_URL="redis://default:gnGBTh0Yy8Evq5C4mDAxYleDdqsUBY9P@redis-16611.c10.us-east-1-2.ec2.cloud.redislabs.com:16611""))
+
 def load_votes():
-    try:
-        stored = os.environ.get("VOTES_DATA")
-        if stored:
-            return json.loads(stored)
-    except:
-        pass
+    data = r.get("votes")
+    if data:
+        return json.loads(data)
     return {"crisis":0,"highly-stressed":0,"concerned":0,"neutral":0,"very-good":0,"thriving":0}
 
 def save_votes(data):
-    os.environ["VOTES_DATA"] = json.dumps(data)
+    r.set("votes", json.dumps(data))
 
 @app.get("/")
 async def root():
