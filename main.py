@@ -19,8 +19,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-r = redis.from_url(os.environ["REDIS-light-blue-school_URL"],
-                   password=os.environ["REDIS-light-blue-school_TOKEN"])
+def get_redis():
+    return redis.from_url(os.environ["REDIS_URL"])
 
 def load_votes():
     data = r.get("votes")
