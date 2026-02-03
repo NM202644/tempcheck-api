@@ -2,6 +2,7 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 import json
 import os
+import redis  # Add this line
 
 app = FastAPI()
 
@@ -13,11 +14,8 @@ app.add_middleware(
     allow_headers=["Content-Type", "Authorization"],
 )
 
-import redis
-import json
-import os
-
-r = redis.from_url(os.environ.get("REDIS_URL="redis://default:gnGBTh0Yy8Evq5C4mDAxYleDdqsUBY9P@redis-16611.c10.us-east-1-2.ec2.cloud.redislabs.com:16611""))
+r = redis.from_url(os.environ["REDIS-light-blue-school_URL"],
+                   password=os.environ["REDIS-light-blue-school_TOKEN"])
 
 def load_votes():
     data = r.get("votes")
