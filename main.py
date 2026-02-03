@@ -1,5 +1,6 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+import json
 
 app = FastAPI()
 
@@ -21,8 +22,10 @@ async def results():
     return data
 
 @app.post("/vote")
-async def vote(vote: dict):
-    value = vote.get("value")
+async def vote(request: Request):
+    body = await request.body()
+    vote_data = json.loads(body)
+    value = vote_data.get("value")
     if value in data:
         data[value] += 1
     return data
