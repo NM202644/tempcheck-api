@@ -8,10 +8,10 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://nm202644.github.io/tempcheck/", "*"],  
+    allow_origins=["https://nm202644.github.io", "https://nm202644.github.io/tempcheck/", "*"],  
     allow_credentials=True,
-    allow_methods=["GET", "POST", "OPTIONS"],
-    allow_headers=["Content-Type", "Authorization"],
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 r = redis.from_url(os.environ["REDIS-light-blue-school_URL"],
