@@ -30,3 +30,10 @@ async def vote(request: Request):
     if value in data:
         data[value] += 1
     return data
+
+@app.post("/reset")
+async def reset_votes():
+    for key in data:
+        data[key] = 0
+    return {"message": "Reset successful"}
+
