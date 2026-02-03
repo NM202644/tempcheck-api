@@ -22,13 +22,13 @@ app.add_middleware(
 def get_redis():
     return redis.from_url(os.environ["REDIS_URL"])
 
-def load_votes():
+def load_votes(r):
     data = r.get("votes")
     if data:
         return json.loads(data)
     return {"crisis":0,"highly-stressed":0,"concerned":0,"neutral":0,"very-good":0,"thriving":0}
 
-def save_votes(data):
+def save_votes(r, data):
     r.set("votes", json.dumps(data))
 
 @app.get("/")
@@ -37,21 +37,25 @@ async def root():
 
 @app.get("/results")
 async def results():
-    return load_votes()
+    r = get_redis()
+    return load_votes(r)
 
 @app.post("/vote")
 async def vote(request: Request):
     body = await request.body()
     vote_data = json.loads(body)
-    data = load_votes()
+    r = get_redis()
+    data = load_votes(r)
     value = vote_data.get("value")
     if value in data:
         data[value] += 1
-    save_votes(data)
+    save_votes(r, data)
     return data
 
 @app.post("/reset")
 async def reset_votes():
+    r = get_redis()
     data = {"crisis":0,"highly-stressed":0,"concerned":0,"neutral":0,"very-good":0,"thriving":0}
-    save_votes(data)
+    save_votes(r, data)
     return {"message": "Reset successful"}
+
