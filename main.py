@@ -58,4 +58,5 @@ async def reset_votes():
     data = {"crisis":0,"highly-stressed":0,"concerned":0,"neutral":0,"very-good":0,"thriving":0}
     save_votes(r, data)
     return {"message": "Reset successful"}
-
+import mangum
+handler = mangum.Mangum(app)
