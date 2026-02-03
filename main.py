@@ -2,13 +2,18 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 import json
 import os
-import redis  # Add this line
+import redis
 
 app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://nm202644.github.io", "https://nm202644.github.io/tempcheck/", "*"],  
+    allow_origins=[
+        "https://nm202644.github.io",
+        "https://nm202644.github.io/tempcheck/", 
+        "http://localhost:3000",
+        "*"
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
