@@ -1,1 +1,28 @@
-{ "rewrites": [{ "/(.*)": "/(.*)", "main.py": "/" }] }
+{
+  "$schema": "https://openapi.vercel.com/main/vercel.json",
+  "functions": {
+    "main.py": {
+      "runtime": "@vercel/python@3.12",
+      "maxDuration": 30
+    }
+  },
+  "headers": [
+    {
+      "source": "/results",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "https://nm202644.github.io" },
+        { "key": "Access-Control-Allow-Credentials", "value": "true" },
+        { "key": "Access-Control-Allow-Methods", "value": "GET,POST,OPTIONS" },
+        { "key": "Access-Control-Allow-Headers", "value": "Content-Type,X-Requested-With" },
+        { "key": "Access-Control-Max-Age", "value": "86400" }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "https://nm202644.github.io" },
+        { "key": "Access-Control-Allow-Credentials", "value": "true" }
+      ]
+    }
+  ]
+}
