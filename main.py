@@ -12,6 +12,10 @@ app.add_middleware(
 
 data = {"crisis":0,"highly-stressed":0,"concerned":0,"neutral":0,"very-good":0,"thriving":0}
 
+@app.get("/")
+async def root():
+    return {"message": "Temp Check API running"}
+
 @app.get("/results")
 async def results():
     return data
