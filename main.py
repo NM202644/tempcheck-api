@@ -8,12 +8,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "https://nm202644.github.io",
-        "https://nm202644.github.io/tempcheck/", 
-        "http://localhost:3000",
-        "*"
-    ],
+    allow_origins=[allow_origins=["https://nm202644.github.io", "*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -58,5 +53,6 @@ async def reset_votes():
     data = {"crisis":0,"highly-stressed":0,"concerned":0,"neutral":0,"very-good":0,"thriving":0}
     save_votes(r, data)
     return {"message": "Reset successful"}
-import mangum
-handler = mangum.Mangum(app)
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app)
