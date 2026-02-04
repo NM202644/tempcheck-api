@@ -1,20 +1,71 @@
-
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "./index.html",
-      "use": "@vercel/node"
+  "$schema": "https://openapi.vercel.com/main/vercel.json",
+  "functions": {
+    "main.py": {
+      "runtime": "@vercel/python@3.12",
+      "maxDuration": 10
     }
-  ],
+  },
   "routes": [
     {
+      "src": "/vote",
+      "dest": "main.py"
+    },
+    {
+      "src": "/results",
+      "dest": "main.py"
+    },
+    {
+      "src": "/reset",
+      "dest": "main.py"
+    },
+    {
       "src": "/(.*)",
-      "dest": "./index.html",
-      "methods": ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-      "headers": {
-        "Access-Control-Allow-Origin": "*"
-      }
+      "dest": "main.py"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(vote|results|reset)",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "https://nm202644.github.io"
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "GET, POST, OPTIONS"
+        },
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "Content-Type"
+        },
+        {
+          "key": "Access-Control-Allow-Credentials",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "source": "OPTIONS /(vote|results|reset)",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "https://nm202644.github.io"
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "GET, POST, OPTIONS"
+        },
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "Content-Type"
+        },
+        {
+          "key": "Access-Control-Max-Age",
+          "value": "86400"
+        }
+      ]
     }
   ]
 }
